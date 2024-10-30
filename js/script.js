@@ -28,7 +28,7 @@ async function getAlbums() {
 // this will fetch data of each folder/playlist  in songs 
 const getCardData = async (ele) => {
     // here ele is folder name
-    const cardData = await fetch(`/songs${ele}/info.json`);
+    const cardData = await fetch(`./songs${ele}/info.json`);
     return await cardData.json();
 }
 
