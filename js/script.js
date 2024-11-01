@@ -12,29 +12,35 @@ let currFolder = "Entertainment";
 // This function will get all album names {folder names} in the song playlist 
 // and store it in playlist array
 async function getAlbums() {
-    const fetchAlbums = await fetch(`./songs/`);
-    const res = await fetchAlbums.text();
-    const div = document.createElement('div');
-    div.innerHTML = res;
-    let as = div.getElementsByTagName("a");
-    for (link of as) {
-        if (link.href.includes('/songs/')) {
-            console.log(link.href);
-            let splitedarr = link.href.split("\songs");
-            playlists.push(splitedarr[1]);
-        }
-    }
+    //CODE FOR VS CODE:
+    // const fetchAlbums = await fetch(`./songs/`);
+    // const res = await fetchAlbums.text();
+    // const div = document.createElement('div');
+    // div.innerHTML = res;
+    // let as = div.getElementsByTagName("a");
+    // for (link of as) {
+    //     if (link.href.includes('/songs/')) {
+    //         console.log(link.href);
+    //         let splitedarr = link.href.split("\songs");
+    //         playlists.push(splitedarr[1]);
+    //     }
+    // }
+
+// CODE EDITED TO WORK WITH GITHUB FOLDERS:
+    playlists = [songs/Bhajan/info.json,songs/Entertainment/info.json,songs/Motivational/info.json];
 }
 // this will fetch data of each folder/playlist  in songs 
 const getCardData = async (ele) => {
     // here ele is folder name
-    const cardData = await fetch(`./songs${ele}/info.json`);
+    const cardData = await fetch(ele);
     return await cardData.json();
 }
 
 // This will now load all the playlists and dynamic cards 
 async function populateCards() {
-    let cardContainer = document.querySelector(".cardContainer");
+    // edited:
+  //  let cardContainer = document.querySelector(".cardContainer")
+    ;
     // it will iterate through all folders in playlist array 
     for (const ele of playlists) {
         // the arr is an object of data of each playlist 
