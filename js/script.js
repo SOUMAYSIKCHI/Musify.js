@@ -27,7 +27,7 @@ async function getAlbums() {
     // }
 
 // CODE EDITED TO WORK WITH GITHUB FOLDERS:
-    playlists = [songs/Bhajan/info.json,songs/Entertainment/info.json,songs/Motivational/info.json];
+    playlists = [`songs/Bhajan/info.json`,`songs/Entertainment/info.json`,`songs/Motivational/info.json`];
 }
 // this will fetch data of each folder/playlist  in songs 
 const getCardData = async (ele) => {
