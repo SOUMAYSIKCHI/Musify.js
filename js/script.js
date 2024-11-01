@@ -33,7 +33,7 @@ async function getAlbums() {
 const getCardData = async (ele) => {
     // here ele is folder name
     const cardData = await fetch(ele);
-    return await cardData.json();
+    return await cardData.text();
 }
 
 // This will now load all the playlists and dynamic cards 
