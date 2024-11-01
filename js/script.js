@@ -12,55 +12,42 @@ let currFolder = "Entertainment";
 // This function will get all album names {folder names} in the song playlist 
 // and store it in playlist array
 async function getAlbums() {
-    //CODE FOR VS CODE:
-    // const fetchAlbums = await fetch(`./songs/`);
-    // const res = await fetchAlbums.text();
-    // const div = document.createElement('div');
-    // div.innerHTML = res;
-    // let as = div.getElementsByTagName("a");
-    // for (link of as) {
-    //     if (link.href.includes('/songs/')) {
-    //         console.log(link.href);
-    //         let splitedarr = link.href.split("\songs");
-    //         playlists.push(splitedarr[1]);
-    //     }
-    // }
-
-// CODE EDITED TO WORK WITH GITHUB FOLDERS:
-    playlists = [`songs/Bhajan/info.json`,`songs/Entertainment/info.json`,`songs/Motivational/info.json`];
+    // Use direct URLs to the JSON files in GitHub folders
+    playlists = [
+        'songs/Bhajan/info.json',
+        'songs/Entertainment/info.json',
+        'songs/Motivational/info.json'
+    ];
 }
-// this will fetch data of each folder/playlist  in songs 
-const getCardData = async (ele) => {
-    // here ele is folder name
-    const cardData = await fetch(ele);
-    return await cardData.text();
-}
+// This fetches data of each folder/playlist in songs
+const getCardData = async (filePath) => {
+    const response = await fetch(filePath);
+    return await response.json();
+};
 
 // This will now load all the playlists and dynamic cards 
 async function populateCards() {
-    // edited:
-  //  let cardContainer = document.querySelector(".cardContainer")
-    ;
-    // it will iterate through all folders in playlist array 
-    for (const ele of playlists) {
-        // the arr is an object of data of each playlist 
-        let arr = await getCardData(ele);
+    let cardContainer = document.querySelector(".cardContainer");
+    cardContainer.innerHTML = ""; // Clear existing content
+
+    for (const filePath of playlists) {
+        const data = await getCardData(filePath);
         cardContainer.insertAdjacentHTML('beforeend', `
-        <div class="card"data-folder=${arr.folderName}>
-            <div class="play">
-                <svg width="40" height="40" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
-                    <!-- Green Circle -->
-                    <circle cx="50" cy="50" r="45" fill="#00C853" />
-                    <!-- Black Play Triangle -->
-                    <polygon points="40,30 40,70 70,50" fill="black" />
-                </svg>
+            <div class="card" data-folder="${data.folderName}">
+                <div class="play">
+                    <svg width="40" height="40" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Green Circle -->
+                        <circle cx="50" cy="50" r="45" fill="#00C853" />
+                        <!-- Black Play Triangle -->
+                        <polygon points="40,30 40,70 70,50" fill="black" />
+                    </svg>
+                </div>
+                <img src="${data.imagesrc}" alt="Album Cover">
+                <h2>${data.title}</h2>
+                <p>${data.description}</p>
             </div>
-            <img src="${arr.imagesrc}" alt="">
-            <h2>${arr.title}!</h2>
-            <p>${arr.description}</p>
-        </div>
-    `);
-    };
+        `);
+    }
 }
 
 function secondsToMinutesSeconds(seconds) {
