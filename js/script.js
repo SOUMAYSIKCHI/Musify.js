@@ -7,6 +7,21 @@ var songNameAlbum = []; //store names of songs
 let playlists = []; //store the folder names of songs
 var i = 0;
 let currFolder = "Entertainment";
+const UpdatedUrl = [
+  {
+    category: "Bhajan",
+    songs: ["songs/Bhajan/Bajrang%20Baan%20Lofi_64(PagalWorld.com.sb).mp3", "songs/Bhajan/Hanuman%20Chalisa_192(PagalWorld.com.sb).mp3"]
+  },
+  {
+    category: "Entertainment",
+    songs: ["songs/Entertainment/_Tu%20Hai%20Kahan_64(PagalWorld.com.sb).mp3","songs/Entertainment/Aayi%20Nai_64(PagalWorld.com.sb).mp3", "songs/Entertainment/Bhool%20Bhulaiyaa%203_192(PagalWorld.com.sb).mp3", "songs/Entertainment/Dil%20Tu%20Jaan%20Tu_64(PagalWorld.com.sb).mp3"]
+  },
+  {
+    category: "Motivationl",
+    songs: ["songs/Motivational/Millionaire_64(PagalWorld.com.sb).mp3"]
+  }
+];
+
 
 
 // This function will get all album names {folder names} in the song playlist 
@@ -74,19 +89,8 @@ const playSong = (songtoPlay, musicToplay) => {
 }
 
 const getSongs = async (currFolder) => {
-    const fetchSongs = await fetch(`./songs/${currFolder}/`);
-    const res = await fetchSongs.text();
-    const div = document.createElement("div");
-    div.innerHTML = res;
-    let as = div.getElementsByTagName('a');
-    let songs = [];
-    for (a of as) {
-        if (a.href.endsWith(".mp3")) {
-            songs.push(a.href);
-        }
-    }
-    return songs;
-
+    const songs = UpdatedUrl.find(item => item.category === currFolder)?.songs || [];
+    
 }
 
 const getSongName = (url) => {
